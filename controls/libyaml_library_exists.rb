@@ -27,9 +27,6 @@ control 'core-plans-libyaml-library-exists' do
 
   plan_pkg_ident = ((plan_installation_directory.stdout.strip).match /(?<=pkgs\/)(.*)/)[1]
   plan_pkg_version = (plan_pkg_ident.match /^#{plan_origin}\/#{plan_name}\/(?<version>.*)\//)[:version]
-  # create pkgconfig filename using major.minor portion of the $plan_pkg_version; in other words,
-  # 0.1.7 becomes 0.1 and the filename is therefore "yaml-0.1.pc"
-  #  "yaml-0.1.pc" is fixed name. So hardcoded the same
   pkgconfig_full_path = File.join(plan_installation_directory.stdout.strip, 'lib', 'pkgconfig',  "yaml-0.1.pc")
   describe command("cat #{pkgconfig_full_path}") do
     its('exit_status') { should eq 0 }
